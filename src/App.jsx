@@ -252,8 +252,10 @@ export default function App() {
   const nav = [
     { key: 'dashboard', icon: '◆', label: 'Dashboard' },
     { key: 'record', icon: '+', label: 'Record' },
-    { key: 'bulk', icon: '≡', label: 'Bulk Entry' },
-    { key: 'upload', icon: '↑', label: 'Upload' },
+    ...(isAdmin ? [
+      { key: 'bulk', icon: '≡', label: 'Bulk Entry' },
+      { key: 'upload', icon: '↑', label: 'Upload' },
+    ] : []),
     { key: 'ledger', icon: '☰', label: 'Ledger' },
     { key: 'holdings', icon: '◎', label: 'By Person' },
     { key: 'byAsset', icon: '▣', label: 'By Asset' },
@@ -298,8 +300,8 @@ export default function App() {
       <div style={{ marginLeft: 200, flex: 1, padding: '24px 32px', maxWidth: 1200, animation: 'fadeIn 0.2s' }} key={tab}>
         {tab === 'dashboard' && <Dashboard data={viewData} prices={prices} />}
         {tab === 'record' && <RecordTx data={data} isAdmin={isAdmin} profile={profile} save={save} show={show} />}
-        {tab === 'bulk' && <BulkEntry data={data} isAdmin={isAdmin} profile={profile} save={save} show={show} />}
-        {tab === 'upload' && <UploadXLS data={data} save={save} show={show} />}
+        {tab === 'bulk' && isAdmin && <BulkEntry data={data} isAdmin={isAdmin} profile={profile} save={save} show={show} />}
+        {tab === 'upload' && isAdmin && <UploadXLS data={data} save={save} show={show} />}
         {tab === 'ledger' && <Ledger data={viewData} fullData={data} save={save} show={show} isAdmin={isAdmin} />}
         {tab === 'holdings' && <Holdings data={viewData} prices={prices} />}
         {tab === 'byAsset' && <ByAsset data={viewData} prices={prices} />}
